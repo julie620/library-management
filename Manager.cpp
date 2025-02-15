@@ -1,13 +1,12 @@
 #include <iostream>
 #include <string>
+#include <stack>
+#include <vector>
 
 #include "Manager.hpp"
 
-class Manager {
-    private:
         Node* root;
 
-    public:
         Manager::Manager() {
             root = nullptr;
         } 
@@ -15,9 +14,10 @@ class Manager {
         bool Manager::add(std::string title, std::string authorLast, std::string authorFirst,
             std::string publisher, std::string publicationDate, std::string genre, 
             std::string synopsis, int isbn) {
+            Node temp(title, authorLast, authorFirst, publisher, publicationDate, genre,
+                synopsis, isbn);
             if (root == NULL) {
-                root = new Node(title, authorLast, authorFirst, publisher, publicationDate, genre,
-                    synopsis, isbn);
+                root = &temp;
                 return true;
             } else {
                 Node* current = root;
@@ -34,11 +34,9 @@ class Manager {
                     }
                 }
                 if (isbn < parent->getISBN()) {
-                    parent->left = new Node(title, authorLast, authorFirst, publisher, publicationDate, 
-                        genre, synopsis, isbn);
+                    parent->left = &temp;
                 } else {
-                    parent->right = new Node(title, authorLast, authorFirst, publisher, publicationDate, 
-                        genre, synopsis, isbn);
+                    parent->right = &temp;
                 }
                 return true;
             }
@@ -177,27 +175,77 @@ class Manager {
             return current;
         }
 
-        void Manager::inorder(Node* current) {
-            if (current != nullptr) {
-                inorder(current->left);
-                std::cout << current->toString() << std::endl;
-                inorder(current->right);
+        void Manager::inorder() {
+            std::vector<std::string> list;
+            std::stack<Node*> s;
+            Node* current = root;
+            while (current != nullptr || s.empty() == false) {
+                while (current != nullptr) {
+                    s.push(current);
+
+                    *current = *current->left;
+                }
+                current = s.top();
+                s.pop();
+                list.push_back(current->toString());
+                current = current->right;
+            }
+            for (int i = 0; i < list.size(); i ++) {
+                std::cout << list[i] << " ";
             }
         }
 
-        void Manager::preorder(Node* current) {
-            if (current != nullptr) {
-                std::cout << current->toString() << std::endl;
-                preorder(current->left);
-                preorder(current->right);
+        void Manager::preorder() {
+            if (root == nullptr) {
+                return;
+            }
+            std::stack<Node*> s;
+            s.push(root);
+            while (s.empty() == false) {
+                Node* temp = s.top();
+                std::cout << temp->toString() << std::endl;
+                s.pop();
+                if (temp->right) {
+                    s.push(temp->right);
+                }
+                if (temp->left) {
+                    s.push(temp->left);
+                }
             }
         }
 
-        void Manager::postorder(Node* current) {
-            if (current != nullptr) {
-                postorder(current->left);
-                postorder(current->right);
-                std::cout << current->toString() << std::endl;
+        void Manager::postorder() {
+            std::vector<std::string> list;
+            std::stack<Node*> s;
+            s.push(root);
+            Node* previous = nullptr;
+            while(!s.empty()) {
+                Node* current = s.top();
+                if (previous == nullptr || previous->left == current || 
+                    previous->right == current) {
+                    if (current->left) {
+                        s.push(current->left);
+                    } else if (current->right) {
+                        s.push(current->right);
+                    } else {
+                        s.pop();
+                        list.push_back(current->toString());
+                    }
+                } else if (current->left == previous) {
+                    if (current->right) {
+                        s.push(current->right);
+                    } else {
+                        s.pop();
+                        list.push_back(current->toString());
+                    }
+                } else if (current->right == previous) {
+                    s.pop();
+                    list.push_back(current->toString());
+                }
+                previous = current;
+            }
+            for (int i = 0; i < list.size(); i ++) {
+                std::cout << list[i] << " ";
             }
         }
 
@@ -228,4 +276,3 @@ class Manager {
         std::string Manager::synopsis(int isbn) {
             return modNode(isbn)->getSynposis();
         }
-};

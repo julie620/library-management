@@ -1,8 +1,6 @@
 #include <string>
 #include "Node.hpp"
 
-class Node {
-    private:
         std::string title;
         std::string authorLast;
         std::string authorFirst;
@@ -12,10 +10,8 @@ class Node {
         std::string synopsis;
         int isbn;
 
-    protected:
         Node* left;
         Node* right;
-        friend class Manager;
 
     Node::Node(std::string title, std::string authorLast, std::string authorFirst, std::string publisher,
         std::string publicationDate, std::string genre, std::string synopsis, int isbn) {
@@ -43,7 +39,6 @@ class Node {
         this->right = right;
         }
 
-    public:
         std::string Node::getTitle() {
             return title;
         }
@@ -89,4 +84,3 @@ class Node {
             + authorFirst + "\nPublisher: " + publisher + "\nPublication Date: " + publicationDate +
             "\nGenre: " + genre + "\nSynposis: " + synopsis + "\nISBN: " + std::to_string(isbn);
         }
-};
