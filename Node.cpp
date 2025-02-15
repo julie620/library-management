@@ -11,9 +11,12 @@ class Node {
         std::string genre;
         std::string synopsis;
         int isbn;
+
+    protected:
         Node* left;
         Node* right;
-    
+        friend class Manager;
+
     Node::Node(std::string title, std::string authorLast, std::string authorFirst, std::string publisher,
         std::string publicationDate, std::string genre, std::string synopsis, int isbn) {
             this->title = title;
@@ -71,6 +74,14 @@ class Node {
 
         int Node::getISBN() {
             return isbn;
+        }
+
+        Node Node::getLeft() {
+            return *left;
+        }
+
+        Node Node::getRight() {
+            return *right;
         }
 
         std::string Node::toString() {
