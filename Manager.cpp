@@ -14,29 +14,29 @@
         bool Manager::add(std::string title, std::string authorLast, std::string authorFirst,
             std::string publisher, std::string publicationDate, std::string genre, 
             std::string synopsis, int isbn) {
-            Node temp(title, authorLast, authorFirst, publisher, publicationDate, genre,
-                synopsis, isbn);
-            if (root == NULL) {
-                root = &temp;
+            Node* temp = new Node(title, authorLast, authorFirst, publisher, publicationDate, genre,
+                synopsis, isbn, nullptr, nullptr);
+            if (root == nullptr) {
+                root = temp;
                 return true;
             } else {
                 Node* current = root;
                 Node* parent = root;
-                while (current != NULL) {
+                while (current != nullptr) {
                     if (isbn < current->getISBN()){
                         parent = current;
-                        *current = current->getLeft();
+                        current = current->left;
                     } else if(isbn > current->getISBN()){
                         parent = current;
-                        *current = current->getRight();
+                        current = current->right;
                     } else {
                         return false;
                     }
                 }
                 if (isbn < parent->getISBN()) {
-                    parent->left = &temp;
+                    parent->left = temp;
                 } else {
-                    parent->right = &temp;
+                    parent->right = temp;
                 }
                 return true;
             }
@@ -178,12 +178,15 @@
         void Manager::inorder() {
             std::vector<std::string> list;
             std::stack<Node*> s;
+            
             Node* current = root;
-            while (current != nullptr || s.empty() == false) {
+            if (current == nullptr) {
+                return;
+            }
+            while (current != nullptr || !s.empty()) {
                 while (current != nullptr) {
                     s.push(current);
-
-                    *current = *current->left;
+                    current = current->left;
                 }
                 current = s.top();
                 s.pop();

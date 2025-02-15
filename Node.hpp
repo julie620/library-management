@@ -3,7 +3,7 @@
 #ifndef NODE_H
 #define NODE_H
 
-class Node {
+ class Node {
     private: 
         std::string title;
         std::string authorLast;
@@ -36,8 +36,8 @@ class Node {
         std::string getGenre();
         std::string getSynposis();
         int getISBN();
-        Node getLeft();
-        Node getRight();
+        Node* getLeft();
+        Node* getRight();
         std::string toString();
 };
 

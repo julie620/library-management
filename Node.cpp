@@ -71,16 +71,16 @@
             return isbn;
         }
 
-        Node Node::getLeft() {
-            return *left;
+        Node* Node::getLeft() {
+            return left;
         }
 
-        Node Node::getRight() {
-            return *right;
+        Node* Node::getRight() {
+            return right;
         }
 
         std::string Node::toString() {
-            return "Title: " + title + "\nAuthor Last Name: " + authorLast + "\nAuthor First Name: "
+            return "\nTitle: " + title + "\nAuthor Last Name: " + authorLast + "\nAuthor First Name: "
             + authorFirst + "\nPublisher: " + publisher + "\nPublication Date: " + publicationDate +
             "\nGenre: " + genre + "\nSynposis: " + synopsis + "\nISBN: " + std::to_string(isbn);
         }
