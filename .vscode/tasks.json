@@ -11,7 +11,7 @@
                 "${fileDirname}\\Manager.cpp",
                 "${fileDirname}\\Test.cpp",
                 "-o",
-                "${fileDirname}\\${fileBasenameNoExtension}.exe"
+                "${fileDirname}\\test.exe"
             ],
             "options": {
                 "cwd": "${fileDirname}"
