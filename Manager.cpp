@@ -56,46 +56,22 @@
                     return false;
                 }
             }
-            if (current == root) {
-                if (current->left == nullptr) {
-                    root = current->right;
-                } else if (current->right == nullptr) {
-                    root = current->left;
-                } else {
-                    removeRootTwo(current);
-                }
-            } else if (current->left == nullptr && current->right == nullptr) {
+            if (current->left == nullptr && current->right == nullptr) {
                 removeLeaf(current, parent, isbn);
             } else if (current->left == nullptr) {
                 removeChildR(current, parent, isbn);
             } else if (current->right == nullptr) {
                 removeChildL(current, parent, isbn);
             } else {
-                removeTwoChild(current, parent, isbn);
+                removeTwoChild(current, parent);
             }
             return true;
         }
 
-        //FIX
-        void Manager::removeRootTwo(Node* current) {
-            Node* replacement = current->right;
-            while (replacement->left != nullptr) {
-                replacement = replacement->left;
-            }
-            replacement->right = root->right;
-            replacement->left = root->left;
-            root = replacement;
-            /*
-            Node* left = root->left;
-            Node* right = root->right;
-            std::cout << root->toString() << std::endl;
-            std::cout << left->toString() << std::endl;
-            std::cout << right->toString() << std::endl;
-            */
-        }
-
         void Manager::removeLeaf(Node* current, Node* parent, int isbn) {
-            if (parent->left == nullptr|| parent->right  == nullptr) {
+            if (current == root) {
+                root = nullptr;
+            } else if (parent->left == nullptr|| parent->right  == nullptr) {
                 if (parent->right == nullptr) {
                     parent->left = nullptr;
                 } else {
@@ -111,7 +87,9 @@
         }
 
         void Manager::removeChildR(Node* current, Node* parent, int isbn){
-            if (isbn < parent->getISBN()) {
+            if (current == root) {
+                root = root->right;
+            } else if (isbn < parent->getISBN()) {
                 parent->left = current->right;
             } else {
                 parent->right = current->right;
@@ -119,14 +97,16 @@
         }
 
         void Manager::removeChildL(Node* current, Node* parent, int isbn) {
-            if (isbn < parent->getISBN()) {
+            if (current == root) {
+                root = root->left;
+            } else if (isbn < parent->getISBN()) {
                 parent->left = current->left;
             } else {
                 parent->right = current->left;
             }
         }
         
-        void Manager::removeTwoChild(Node* current, Node* parent, int isbn) {
+        void Manager::removeTwoChild(Node* current, Node* parent) {
             Node* replacement = current->right;
             Node* parent2 = current;
             while (replacement->left != nullptr) {
@@ -142,7 +122,11 @@
                     replacement->left = current->left;
                 }
             }
-            parent->right = replacement;
+            if (parent == nullptr) {
+                root = replacement;
+            } else {
+                parent->right = replacement;
+            }
         }
 
         bool Manager::validMod(int isbn) {

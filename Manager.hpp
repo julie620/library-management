@@ -16,7 +16,7 @@ class Manager{
         void removeLeaf(Node* current, Node* parent, int isbn);
         void removeChildR(Node* current, Node* parent, int isbn);
         void removeChildL(Node* current, Node* parent, int isbn);
-        void removeTwoChild(Node* current, Node* parent, int isbn);
+        void removeTwoChild(Node* current, Node* parent);
         bool validMod(int isbn);
         Node* modNode(int isbn);
         bool modify(std::string title, std::string authorLast, std::string authorFirst, 

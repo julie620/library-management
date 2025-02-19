@@ -4,7 +4,7 @@ This program allows you to add book information to a binary search tree
 
 ## Program Description
 
-The program takes in the following information about a book and stores it as a node in a BST.
+The program takes in the following information about a book and stores it as a node in a BST:
 * Title
 * Author Last Name
 * Author First Name
@@ -13,10 +13,6 @@ The program takes in the following information about a book and stores it as a n
 * Genre
 * Synopsis
 * ISBN (Key)
-
-## IMPORTANT NOTES
-
-* If you delete the a node with two children, the program will have issues with traversal (freeze or infinite print)
 
 Juliana Serrano\
 02/19/2025
