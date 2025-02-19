@@ -38,7 +38,7 @@
     }
 
     void removeOpt(Manager* myLibrary) {
-        std::cout << "Which entry would you like to modify (Enter ISBN)?";
+        std::cout << "Which entry would you like to delete (Enter ISBN)?";
         int entryNum;
         std::cin >> entryNum;
         myLibrary->remove(entryNum);

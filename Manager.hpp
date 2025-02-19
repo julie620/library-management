@@ -12,7 +12,7 @@ class Manager{
             std::string publisher, std::string publicationDate, std::string genre,
             std::string synopsis, int isbn);
         bool remove(int isbn);
-        void removeRootTwo(int isbn);
+        void removeRootTwo(Node* current);
         void removeLeaf(Node* current, Node* parent, int isbn);
         void removeChildR(Node* current, Node* parent, int isbn);
         void removeChildL(Node* current, Node* parent, int isbn);
